@@ -1,17 +1,21 @@
-export class ProductModel {
-  _id: string;
+import { BaseModel } from 'src/common/base.model';
+
+export class ProductCharacteristic {
+  name: string;
+  value: string;
+}
+
+export class ProductModel extends BaseModel {
   image: string;
   title: string;
   price: number;
   oldPrice: number;
   credit: number;
   calculatedRating: number;
-  descriprion: string;
-  advantedas: string;
+  description: string;
+  advantages: string;
   disadvantages: string;
   categories: string[];
-  tags: string;
-  characteristics: {
-    [key: string]: string;
-  };
+  tags: string[];
+  characteristics: ProductCharacteristic[];
 }

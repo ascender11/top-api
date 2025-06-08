@@ -1,3 +1,5 @@
+import { BaseModel } from 'src/common/base.model';
+
 export enum TopLevelCategory {
   Courses,
   Services,
@@ -5,22 +7,26 @@ export enum TopLevelCategory {
   Products,
 }
 
-export class TopPageModel {
-  _id: string;
+export class HhData {
+  count: number;
+  juniorSalary: number;
+  middleSalary: number;
+  seniorSalary: number;
+}
+
+export class TopPageAdvantage {
+  title: string;
+  description: string;
+}
+
+export class TopPageModel extends BaseModel {
   firstCategory: TopLevelCategory;
   secondCategory: string;
+  ailas: string;
   title: string;
   category: string;
-  hh?: {
-    count: number;
-    juniorSalary: number;
-    middleSalary: number;
-    seniorSalary: number;
-  };
-  advantages: {
-    title: string;
-    description: string;
-  }[];
+  hh?: HhData;
+  advantages: TopPageAdvantage[];
   seoText: string;
   tagsTitle: string;
   tags: string[];

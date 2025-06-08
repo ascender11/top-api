@@ -1,8 +1,8 @@
-export class ReviewModel {
-  _id: string;
+import { BaseModel } from 'src/common/base.model';
+
+export class ReviewModel extends BaseModel {
   name: string;
   title: string;
   description: string;
   rating: number;
-  createdAt: Date;
 }
