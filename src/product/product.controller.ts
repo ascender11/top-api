@@ -1,11 +1,12 @@
 import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Post } from '@nestjs/common';
 import { FindProductDto } from './dto/find-product.dto';
 import { Product } from './product.schema';
+import { CreateProductDto } from './dto/create-product.dto';
 
 @Controller('product')
 export class ProductController {
   @Post('create')
-  async create(@Body() dto: Omit<Product, '_id'>) {}
+  async create(@Body() dto: CreateProductDto) {}
 
   @Get(':id')
   async get(@Param('id') id: string) {}
