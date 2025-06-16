@@ -6,6 +6,12 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { FindProductDto } from './dto/find-product.dto';
 import { Review } from 'src/review/review.schema';
 
+type ProductWithReviews = Product & {
+  reviews: Review[];
+  reviewCount: number;
+  reviewAvg: number;
+};
+
 @Injectable()
 export class ProductService {
   constructor(@InjectModel(Product.name) private readonly productModel: Model<ProductDocument>) {}
@@ -26,11 +32,9 @@ export class ProductService {
     return this.productModel.findByIdAndUpdate(id, dto, { new: true }).exec();
   }
 
-  async findWithReviews(
-    dto: FindProductDto,
-  ): Promise<(Product & { review: Review[]; reviewCount: number; reviewAvg: number })[]> {
+  async findWithReviews(dto: FindProductDto): Promise<ProductWithReviews[]> {
     return this.productModel
-      .aggregate([
+      .aggregate<ProductWithReviews>([
         { $match: { categories: dto.category } },
         { $sort: { _id: 1 } },
         { $limit: dto.limit },
@@ -59,6 +63,6 @@ export class ProductService {
           },
         },
       ])
-      .exec() as Promise<(Product & { review: Review[]; reviewCount: number; reviewAvg: number })[]>;
+      .exec();
   }
 }
