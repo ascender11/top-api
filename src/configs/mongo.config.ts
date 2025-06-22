@@ -1,7 +1,7 @@
 import { ConfigService } from '@nestjs/config';
 import { MongooseModuleFactoryOptions } from '@nestjs/mongoose';
 
-export const getMongoConfig = async (configService: ConfigService): Promise<MongooseModuleFactoryOptions> => {
+export const getMongoConfig = (configService: ConfigService): MongooseModuleFactoryOptions => {
   return {
     uri: getMongoString(configService),
     ...getMongoOptions(),

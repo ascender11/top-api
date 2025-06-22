@@ -4,7 +4,7 @@ import * as request from 'supertest';
 import { App } from 'supertest/types';
 import { AppModule } from '../src/app.module';
 import { CreateReviewDto } from 'src/review/dto/create-review.dto';
-import mongoose, { Types, disconnect } from 'mongoose';
+import { Types, disconnect } from 'mongoose';
 import { REVIEW_NOT_FOUND } from 'src/review/review.constants';
 import { AuthDto } from 'src/auth/dto/auth.dto';
 
@@ -36,7 +36,9 @@ describe('AppController (e2e)', () => {
     app = moduleFixture.createNestApplication();
     await app.init();
 
-    const { body } = await request(app.getHttpServer()).post('/auth/login').send(loginDto);
+    const response = await request(app.getHttpServer()).post('/auth/login').send(loginDto);
+
+    const body = response.body as { access_token: string };
     token = body.access_token;
   });
 
@@ -45,7 +47,7 @@ describe('AppController (e2e)', () => {
       .post('/review/create')
       .send(testDto)
       .expect(201)
-      .then(({ body }: request.Response) => {
+      .then(({ body }: { body: { _id: string } }) => {
         createdId = body._id;
         expect(createdId).toBeDefined();
       });
@@ -62,7 +64,7 @@ describe('AppController (e2e)', () => {
     return request(app.getHttpServer())
       .get('/review/byProduct/' + productId)
       .expect(200)
-      .then(({ body }: request.Response) => {
+      .then(({ body }: { body: { productId: string }[] }) => {
         expect(body.length).toBe(1);
       });
   });
@@ -71,7 +73,7 @@ describe('AppController (e2e)', () => {
     return request(app.getHttpServer())
       .get('/review/byProduct/' + new Types.ObjectId().toHexString())
       .expect(200)
-      .then(({ body }: request.Response) => {
+      .then(({ body }: { body: { productId: string }[] }) => {
         expect(body.length).toBe(0);
       });
   });

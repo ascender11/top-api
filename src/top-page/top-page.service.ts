@@ -3,7 +3,6 @@ import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { TopLevelCategory, TopPage, TopPageDocument } from './top-page.schema';
 import { CreateTopPageDto } from './dto/create-top-page.dto';
-import { FindTopPageDto } from './dto/find-top-page.dto';
 
 @Injectable()
 export class TopPageService {
