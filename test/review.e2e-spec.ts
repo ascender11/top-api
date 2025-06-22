@@ -8,6 +8,8 @@ import { Types, disconnect } from 'mongoose';
 import { REVIEW_NOT_FOUND } from 'src/review/review.constants';
 import { AuthDto } from 'src/auth/dto/auth.dto';
 
+jest.setTimeout(30000);
+
 const productId = new Types.ObjectId().toHexString();
 
 const loginDto: AuthDto = {

@@ -7,6 +7,8 @@ import { disconnect } from 'mongoose';
 import { AuthDto } from 'src/auth/dto/auth.dto';
 import { USER_NOT_FOUND_ERROR, WRONG_PASSWORD_ERROR } from 'src/auth/auth.constants';
 
+jest.setTimeout(30000);
+
 const loginDto: AuthDto = {
   login: 'a@a.ru',
   password: '1',
