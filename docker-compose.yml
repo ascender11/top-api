@@ -1,9 +1,6 @@
 services:
   top-api:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: top-api:prod
+    image: ghcr.io/ascender11/app:master
     container_name: top-api
     restart: always
     ports:
